@@ -1,14 +1,12 @@
 import React from 'react';
 import TimelineCard from './TimelineCard';
+import politician001 from '../politician001.png';
 
 const ThreadsContainer = ({ title, events, onBack }) => {
     return (
         <div className="w-full flex items-center justify-center box-border pb-[70px]">
             {/* The primary frame container for the Threads view */}
             <div className="w-full relative overflow-visible box-border">
-                
-                
-
                 {/* Content Wrapper */}
                 <div className="flex flex-col pt-[72px]">
                     {/* Apple Logo replacing generic image to match user 1.png precisely! */}
@@ -19,8 +17,8 @@ const ThreadsContainer = ({ title, events, onBack }) => {
                     </div>
                     {/* Back Button for Navigation (Hidden inside design, used as utility overlay) */}
                     <button onClick={onBack} className="text-blue-500 font-bold text-xs hover:opacity-80 cursor-pointer self-start ml-[28px] mt-[25px]">
-                    &lt; Home
-                </button>
+                        &lt; Home
+                    </button>
                     {/* Header Title (Aligned cleanly and precisely to scale with Figma parameters) */}
                     <h1 className="ml-[28px] mt-[10px] w-[339px] font-malayalam font-bold text-[20px] text-textPrimary leading-[1.247]">
                         {title}
@@ -44,7 +42,7 @@ const ThreadsContainer = ({ title, events, onBack }) => {
                                             text={ev.text}
                                             authorName={ev.authorName} 
                                             authorColor={ev.authorColor} 
-                                            imageSrc={ev.imageSrc} 
+                                            imageSrc={politician001} 
                                         />
                                     </div>
                                 ) : (
