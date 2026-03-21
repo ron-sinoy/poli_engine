@@ -14,7 +14,7 @@ const HomeContainer = ({ onTopicClick }) => {
                 <img src={appleLogoText} className="h-full w-full object-cover" alt="Logo" />
             </div>
 
-            <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[rgba(240,242,244,1)] py-[10px] md:mt-[2px]">
+            <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
                <TopicCard time="1 min" text="സുധാകരൻ കുടുംബാംഗങ്ങളോടൊപ്പം" onClick={() => onTopicClick('topic-1')} />
                <TopicCard time="1 min" text="സ്ഥാനാർഥി നിർണയത്തിൽ അതൃപ്തിയുണ്ടോ" onClick={() => onTopicClick('topic-2')} />
                <TopicCard time="1 min" text="പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" onClick={() => onTopicClick('topic-3')} />

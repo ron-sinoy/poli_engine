@@ -44,7 +44,7 @@
 */
 @layer components {
   .app-shell {
-    @apply relative mx-auto box-border flex h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden rounded-none border-0 bg-bgMain font-sans shadow-none;
+    @apply relative mx-auto box-border flex h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden rounded-none border-0 bg-[#f0f2f4] font-sans shadow-none;
   }
 
   @media (min-width: 768px) {
