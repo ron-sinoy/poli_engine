@@ -58,7 +58,6 @@ const ThreadsContainer = ({ title, events, onBack }) => {
                 </div>
                 
                 {/* Fixed Bottom Nav Simulation */}
-                <div className="fixed bottom-[0px] left-[50%] -translate-x-1/2 w-[402px] h-[70px] bg-[#F5F5F5] rounded-b-[45px] pointer-events-none z-30 opacity-70"></div>
             </div>
         </div>
     );
