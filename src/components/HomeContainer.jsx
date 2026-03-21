@@ -6,7 +6,7 @@ import appleLogoText from '../apple-logo-text.png';
 const HomeContainer = ({ onTopicClick }) => {
     return (
         <div className="w-full h-full flex flex-col box-border px-[24px] items-start">
-            <div className="mt-[75px]">
+            <div className="mt-[10px] md:mt-[75px]">
                 <BreakingNews text="എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" />
             </div>
             
@@ -14,13 +14,13 @@ const HomeContainer = ({ onTopicClick }) => {
                 <img src={appleLogoText} className="h-full w-full object-cover" alt="Logo" />
             </div>
 
-            <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px] overflow-hidden rounded-[34px] bg-[rgba(240,242,244,1)] py-[10px] md:mt-[2px]">
+            <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[rgba(240,242,244,1)] py-[10px] md:mt-[2px]">
                <TopicCard time="1 min" text="സുധാകരൻ കുടുംബാംഗങ്ങളോടൊപ്പം" onClick={() => onTopicClick('topic-1')} />
                <TopicCard time="1 min" text="സ്ഥാനാർഥി നിർണയത്തിൽ അതൃപ്തിയുണ്ടോ" onClick={() => onTopicClick('topic-2')} />
                <TopicCard time="1 min" text="പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" onClick={() => onTopicClick('topic-3')} />
             </div>
 
-            <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[7px] shadow-sm cursor-pointer hover:bg-opacity-90">
+            <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[20px] shadow-sm cursor-pointer hover:bg-opacity-90">
                 <span className="font-sf font-semibold text-[13px] text-[#FFFFFF] tracking-[-1.77%] -mr-1">More</span>
             </div>
 

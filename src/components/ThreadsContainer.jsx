@@ -8,7 +8,7 @@ const ThreadsContainer = ({ title, events, onBack }) => {
             {/* The primary frame container for the Threads view */}
             <div className="w-full relative overflow-visible box-border">
                 {/* Content Wrapper */}
-                <div className="flex flex-col pt-[72px]">
+                <div className="flex flex-col pt-[20px] md:pt-[72px]">
                     {/* Apple Logo replacing generic image to match user 1.png precisely! */}
                     <div className="ml-[23px] w-[26px] h-[31px]">
                         <svg viewBox="0 0 384 512" fill="black" className="w-full h-full">
