@@ -19,6 +19,7 @@ const formatUpdatedAt = (updatedAt) => {
     if (diffMinutes < 60) {
         return `${diffMinutes} min`;
     }
+    // nothing
 
     const diffHours = Math.round(diffMinutes / 60);
     if (diffHours < 24) {
