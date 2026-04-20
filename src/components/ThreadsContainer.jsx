@@ -2,7 +2,35 @@ import React from 'react';
 import TimelineCard from './TimelineCard';
 import politician001 from '../politician001.png';
 
-const ThreadsContainer = ({ title, events, onBack }) => {
+const AVATAR_FALLBACKS = ['#F48789', '#94BEF2'];
+
+const toTimelineEvent = (entry, index) => {
+    if (entry.entry_type === 'quote') {
+        const speaker = entry.speaker ?? {};
+        const authorColor = speaker.alliance?.color || AVATAR_FALLBACKS[index % AVATAR_FALLBACKS.length];
+
+        return {
+            type: 'card',
+            text: entry.quote_text ? `“${entry.quote_text}”` : '',
+            authorName: speaker.name || '',
+            authorColor,
+            imageSrc: speaker.photo_url || politician001,
+        };
+    }
+
+    return {
+        type: 'text',
+        text: entry.body || '',
+    };
+};
+
+const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => {
+    const events = isLoading || !thread
+        ? []
+        : [...(thread.timeline_entries ?? [])]
+            .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
+            .map(toTimelineEvent);
+
     return (
         <div className="w-full flex items-center justify-center box-border pb-[70px]">
             {/* The primary frame container for the Threads view */}
@@ -21,14 +49,29 @@ const ThreadsContainer = ({ title, events, onBack }) => {
                     </button>
                     {/* Header Title (Aligned cleanly and precisely to scale with Figma parameters) */}
                     <h1 className="ml-[28px] mt-[10px] w-[339px] font-malayalam font-bold text-[20px] text-textPrimary leading-[1.247]">
-                        {title}
+                        {isLoading ? 'Loading...' : thread?.title ?? ''}
                     </h1>
                 </div>
 
                 {/* Dynamic Timeline Group */}
                 <div className="w-full pt-[40px] flex flex-col relative z-10 box-border">
+                    {error && (
+                        <div className="ml-[28px] mr-[24px] rounded-[24px] bg-cardBg px-[20px] py-[18px] shadow-sm">
+                            <p className="font-malayalam font-bold text-[14px] text-textPrimary">Content could not load</p>
+                            <p className="mt-[8px] font-inter text-[11px] leading-[1.35] text-timeText break-words">{error}</p>
+                        </div>
+                    )}
+
+                    {!isLoading && !error && thread && events.length === 0 && (
+                        <div className="ml-[28px] mr-[24px] rounded-[24px] bg-cardBg px-[20px] py-[18px] shadow-sm">
+                            <p className="font-malayalam font-medium text-[14px] text-textPrimary">No timeline entries available</p>
+                        </div>
+                    )}
+
                     {/* The overarching continuous timeline line bounded smoothly by array heights */}
-                    <div className="absolute left-[28.5px] top-[20px] bottom-[50px] w-[1px] bg-timelineStroke opacity-60 pointer-events-none -translate-x-1/2"></div>
+                    {events.length > 0 && (
+                        <div className="absolute left-[28.5px] top-[20px] bottom-[50px] w-[1px] bg-timelineStroke opacity-60 pointer-events-none -translate-x-1/2"></div>
+                    )}
 
                     {events.map((ev, index) => {
                         return (
@@ -42,7 +85,8 @@ const ThreadsContainer = ({ title, events, onBack }) => {
                                             text={ev.text}
                                             authorName={ev.authorName} 
                                             authorColor={ev.authorColor} 
-                                            imageSrc={politician001} 
+                                            imageSrc={ev.imageSrc} 
+                                            fallbackImageSrc={politician001}
                                         />
                                     </div>
                                 ) : (

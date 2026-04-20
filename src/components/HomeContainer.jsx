@@ -3,7 +3,34 @@ import BreakingNews from './BreakingNews';
 import TopicCard from './TopicCard';
 import appleLogoText from '../apple-logo-text.png';
 
-const HomeContainer = ({ onTopicClick }) => {
+const formatUpdatedAt = (updatedAt) => {
+    if (!updatedAt) {
+        return '';
+    }
+
+    const updatedDate = new Date(updatedAt);
+    if (Number.isNaN(updatedDate.getTime())) {
+        return '';
+    }
+
+    const diffMs = Date.now() - updatedDate.getTime();
+    const diffMinutes = Math.max(1, Math.round(diffMs / 60000));
+
+    if (diffMinutes < 60) {
+        return `${diffMinutes} min`;
+    }
+
+    const diffHours = Math.round(diffMinutes / 60);
+    if (diffHours < 24) {
+        return `${diffHours} hr`;
+    }
+
+    return `${Math.round(diffHours / 24)} day`;
+};
+
+const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicClick }) => {
+    const visibleThreads = isLoading ? [] : threads.slice(0, 3);
+
     return (
         <div className="w-full h-full flex flex-col box-border px-[24px] items-start">
             <div className="mt-[10px] md:mt-[75px]">
@@ -15,9 +42,30 @@ const HomeContainer = ({ onTopicClick }) => {
             </div>
 
             <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
-               <TopicCard time="1 min" text="സുധാകരൻ കുടുംബാംഗങ്ങളോടൊപ്പം" onClick={() => onTopicClick('topic-1')} />
-               <TopicCard time="1 min" text="സ്ഥാനാർഥി നിർണയത്തിൽ അതൃപ്തിയുണ്ടോ" onClick={() => onTopicClick('topic-2')} />
-               <TopicCard time="1 min" text="പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" onClick={() => onTopicClick('topic-3')} />
+               {isLoading && (
+                 <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
+                   <span className="font-malayalam font-medium text-[14px] text-titleMalayalam">Loading threads...</span>
+                 </div>
+               )}
+               {!isLoading && error && (
+                 <div className="w-full max-w-[354px] min-h-[105px] bg-cardBg rounded-[34px] mx-auto px-[24px] py-[18px] box-border shrink-0 shadow-sm flex flex-col justify-center gap-[8px]">
+                   <span className="font-malayalam font-bold text-[14px] text-titleMalayalam">Content could not load</span>
+                   <span className="font-inter text-[11px] leading-[1.35] text-timeText break-words">{error}</span>
+                 </div>
+               )}
+               {!isLoading && !error && visibleThreads.length === 0 && (
+                 <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
+                   <span className="font-malayalam font-medium text-[14px] text-titleMalayalam">No threads available</span>
+                 </div>
+               )}
+               {visibleThreads.map((thread) => (
+                 <TopicCard
+                   key={thread.thread_id}
+                   time={formatUpdatedAt(thread.updated_at)}
+                   text={thread.title}
+                   onClick={() => onTopicClick(thread.thread_id)}
+                 />
+               ))}
             </div>
 
             <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[20px] shadow-sm cursor-pointer hover:bg-opacity-90">

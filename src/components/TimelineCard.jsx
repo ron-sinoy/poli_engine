@@ -1,6 +1,15 @@
 import React from 'react';
 
-const TimelineCard = ({ text, authorName, authorColor, imageSrc }) => {
+const TimelineCard = ({ text, authorName, authorColor, imageSrc, fallbackImageSrc }) => {
+    const handleImageError = (event) => {
+        if (!fallbackImageSrc || event.currentTarget.dataset.fallbackApplied === 'true') {
+            return;
+        }
+
+        event.currentTarget.dataset.fallbackApplied = 'true';
+        event.currentTarget.src = fallbackImageSrc;
+    };
+
     return (
         <div className="w-full min-h-[123px] pb-[25px] rounded-[34px] bg-cardBg border border-[#E2E8F0] box-border flex items-start pt-[25px] pl-[18px] pr-[18px] shadow-sm relative">
             
@@ -12,7 +21,7 @@ const TimelineCard = ({ text, authorName, authorColor, imageSrc }) => {
                     border: `3px solid ${authorColor}`,
                 }}
             >
-                <img src={imageSrc} className="w-[58px] h-[58px] object-cover object-top" alt="avatar" /> 
+                <img src={imageSrc} onError={handleImageError} className="w-[58px] h-[58px] object-cover object-top" alt="avatar" /> 
             </div>
             
             {/* Text block with Quote and Author mapped gracefully via Flex column */}

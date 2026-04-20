@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import HomeContainer from './components/HomeContainer';
 import ThreadsContainer from './components/ThreadsContainer';
-
-const MOCK_EVENTS = [
-    { type: 'card', text: "“എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല”", authorName: "പിണറായി വിജയൻ", authorColor: "#F48789", imageSrc: "/src/politician001.png" },
-    { type: 'card', text: "“എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല”", authorName: "ശശി തരൂർ", authorColor: "#94BEF2", imageSrc: "/src/politician001.png" },
-    { type: 'text', text: "സ്ഥാനാർഥി നിർണയത്തിൽ അതൃപ്തിയുണ്ടോ എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" },
-    { type: 'text', text: "സ്ഥാനാർഥി നിർണയത്തിൽ അതൃപ്തിയുണ്ടോ എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" },
-    { type: 'card', text: "“എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല”", authorName: "പിണറായി വിജയൻ", authorColor: "#F48789", imageSrc: "/src/politician001.png" }
-];
+import { getThread, getThreadsList } from './api/threads';
 
 const formatTime = (d) =>
   d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
 function App() {
   const [view, setView] = useState('home');
-  const [activeThread, setActiveThread] = useState({
-        title: "സുധാകരൻ കുടുംബാംഗങ്ങളോടൊപ്പം",
-        subtitle: "",
-        events: MOCK_EVENTS
-  });
+  const [threads, setThreads] = useState([]);
+  const [activeThread, setActiveThread] = useState(null);
+  const [threadsLoading, setThreadsLoading] = useState(true);
+  const [threadLoading, setThreadLoading] = useState(false);
+  const [threadsError, setThreadsError] = useState('');
+  const [threadError, setThreadError] = useState('');
   const [currentTime, setCurrentTime] = useState(() => formatTime(new Date()));
 
   useEffect(() => {
@@ -27,18 +21,58 @@ function App() {
     return () => window.clearInterval(id);
   }, []);
 
-  const handleTopicClick = (topicId) => {
-      setActiveThread({
-          title: "സുധാകരൻ കുടുംബാംഗങ്ങളോടൊപ്പം",
-          subtitle: "",
-          events: MOCK_EVENTS
-      });
+  useEffect(() => {
+    let ignore = false;
+
+    const loadThreads = async () => {
+      setThreadsLoading(true);
+      setThreadsError('');
+
+      try {
+        const threadsList = await getThreadsList();
+        if (!ignore) {
+          setThreads(threadsList);
+        }
+      } catch (error) {
+        if (!ignore) {
+          setThreads([]);
+          setThreadsError(error.message);
+        }
+      } finally {
+        if (!ignore) {
+          setThreadsLoading(false);
+        }
+      }
+    };
+
+    loadThreads();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  const handleTopicClick = async (threadId) => {
+      setThreadLoading(true);
+      setActiveThread(null);
+      setThreadError('');
       setView('threads');
+
+      try {
+        const thread = await getThread(threadId);
+        setActiveThread(thread);
+      } catch (error) {
+        setActiveThread(null);
+        setThreadError(error.message);
+      } finally {
+        setThreadLoading(false);
+      }
   };
 
   const handleBack = () => {
       setView('home');
       setActiveThread(null);
+      setThreadLoading(false);
   }
 
   return (
@@ -60,11 +94,17 @@ function App() {
         {/* Scrollable Content */}
         <div className="w-full h-full overflow-y-auto no-scrollbar flex-1 pb-[20px] relative transition-transform">
             {view === 'home' ? (
-                <HomeContainer onTopicClick={handleTopicClick} />
+                <HomeContainer
+                    threads={threads}
+                    isLoading={threadsLoading}
+                    error={threadsError}
+                    onTopicClick={handleTopicClick}
+                />
             ) : (
                 <ThreadsContainer 
-                    title={activeThread.title}
-                    events={activeThread.events}
+                    thread={activeThread}
+                    isLoading={threadLoading}
+                    error={threadError}
                     onBack={handleBack}
                 />
             )}
