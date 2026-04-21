@@ -45,18 +45,18 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
       <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
         {isLoading && (
           <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
-            <span className="font-noto font-semibold text-[16px] text-titleMalayalam">Loading threads...</span>
+            <span className="font-anek font-semibold text-[16px] text-titleMalayalam">Loading threads...</span>
           </div>
         )}
         {!isLoading && error && (
           <div className="w-full max-w-[354px] min-h-[105px] bg-cardBg rounded-[34px] mx-auto px-[24px] py-[18px] box-border shrink-0 shadow-sm flex flex-col justify-center gap-[8px]">
-            <span className="font-noto font-semibold text-[16px] text-titleMalayalam">Content could not load</span>
+            <span className="font-anek font-semibold text-[16px] text-titleMalayalam">Content could not load</span>
             <span className="font-inter text-[11px] leading-[1.35] text-timeText break-words">{error}</span>
           </div>
         )}
         {!isLoading && !error && visibleThreads.length === 0 && (
           <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
-            <span className="font-noto font-semibold text-[16px] text-titleMalayalam">No threads available</span>
+            <span className="font-anek font-semibold text-[16px] text-titleMalayalam">No threads available</span>
           </div>
         )}
         {visibleThreads.map((thread) => (
@@ -70,13 +70,13 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
       </div>
 
       <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[20px] shadow-sm cursor-pointer hover:bg-opacity-90">
-        <span className="font-noto font-semibold text-[16px] text-[#FFFFFF] tracking-[-1.77%] -mr-1">More</span>
+        <span className="font-anek font-semibold text-[16px] text-[#FFFFFF] tracking-[-1.77%] -mr-1">More</span>
       </div>
 
       <div className="w-full h-[1px] bg-[#000000] mt-[16px] opacity-20"></div>
 
       <div className="w-full max-w-[354px] h-[161px] bg-gray-200 mt-[20px] rounded-[12px] flex items-center justify-center">
-        <span className="text-gray-500 font-noto font-semibold text-[16px]">Spotlight (UI Pending)</span>
+        <span className="text-gray-500 font-anek font-semibold text-[16px]">Spotlight (UI Pending)</span>
       </div>
     </div>
   );
