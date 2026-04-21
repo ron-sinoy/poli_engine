@@ -57,14 +57,14 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
                 <div className="w-full pt-[40px] flex flex-col relative z-10 box-border">
                     {error && (
                         <div className="ml-[28px] mr-[24px] rounded-[24px] bg-cardBg px-[20px] py-[18px] shadow-sm">
-                            <p className="font-malayalam font-bold text-[14px] text-textPrimary">Content could not load</p>
+                            <p className="font-noto font-bold text-[15px] text-textPrimary">Content could not load</p>
                             <p className="mt-[8px] font-inter text-[11px] leading-[1.35] text-timeText break-words">{error}</p>
                         </div>
                     )}
 
                     {!isLoading && !error && thread && events.length === 0 && (
                         <div className="ml-[28px] mr-[24px] rounded-[24px] bg-cardBg px-[20px] py-[18px] shadow-sm">
-                            <p className="font-malayalam font-medium text-[14px] text-textPrimary">No timeline entries available</p>
+                            <p className="font-noto font-medium text-[15px] text-textPrimary">No timeline entries available</p>
                         </div>
                     )}
 
@@ -91,7 +91,7 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
                                     </div>
                                 ) : (
                                     <div className="ml-[46px] mr-[24px]">
-                                        <p className="w-full font-noto font-medium text-[14px] text-textPrimary leading-[1.4] opacity-90">
+                                        <p className="w-full font-noto font-medium text-[15px] text-textPrimary leading-[1.4] opacity-90">
                                             {ev.text}
                                         </p>
                                     </div>

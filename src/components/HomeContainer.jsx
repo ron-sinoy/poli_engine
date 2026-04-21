@@ -4,82 +4,82 @@ import TopicCard from './TopicCard';
 import appleLogoText from '../apple-logo-text.png';
 
 const formatUpdatedAt = (updatedAt) => {
-    if (!updatedAt) {
-        return '';
-    }
+  if (!updatedAt) {
+    return '';
+  }
 
-    const updatedDate = new Date(updatedAt);
-    if (Number.isNaN(updatedDate.getTime())) {
-        return '';
-    }
+  const updatedDate = new Date(updatedAt);
+  if (Number.isNaN(updatedDate.getTime())) {
+    return '';
+  }
 
-    const diffMs = Date.now() - updatedDate.getTime();
-    const diffMinutes = Math.max(1, Math.round(diffMs / 60000));
+  const diffMs = Date.now() - updatedDate.getTime();
+  const diffMinutes = Math.max(1, Math.round(diffMs / 60000));
 
-    if (diffMinutes < 60) {
-        return `${diffMinutes} min`;
-    }
-    // nothing
+  if (diffMinutes < 60) {
+    return `${diffMinutes} min`;
+  }
+  // nothing
 
-    const diffHours = Math.round(diffMinutes / 60);
-    if (diffHours < 24) {
-        return `${diffHours} hr`;
-    }
+  const diffHours = Math.round(diffMinutes / 60);
+  if (diffHours < 24) {
+    return `${diffHours} hr`;
+  }
 
-    return `${Math.round(diffHours / 24)} day`;
+  return `${Math.round(diffHours / 24)} day`;
 };
 
 const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicClick }) => {
-    const visibleThreads = isLoading ? [] : threads.slice(0, 3);
+  const visibleThreads = isLoading ? [] : threads.slice(0, 3);
 
-    return (
-        <div className="w-full h-full flex flex-col box-border px-[24px] items-start">
-            <div className="mt-[10px] md:mt-[75px]">
-                <BreakingNews text="എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" />
-            </div>
-            
-            <div className="relative ml-[11px] mt-[17px]  h-[55px] w-[111px] flex-shrink-0 overflow-hidden md:block">
-                <img src={appleLogoText} className="h-full w-full object-cover" alt="Logo" />
-            </div>
+  return (
+    <div className="w-full h-full flex flex-col box-border px-[24px] items-start">
+      <div className="mt-[10px] md:mt-[75px]">
+        <BreakingNews text="എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" />
+      </div>
 
-            <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
-               {isLoading && (
-                 <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
-                   <span className="font-anek font-semibold text-[16px] text-titleMalayalam">Loading threads...</span>
-                 </div>
-               )}
-               {!isLoading && error && (
-                 <div className="w-full max-w-[354px] min-h-[105px] bg-cardBg rounded-[34px] mx-auto px-[24px] py-[18px] box-border shrink-0 shadow-sm flex flex-col justify-center gap-[8px]">
-                   <span className="font-anek font-semibold text-[16px] text-titleMalayalam">Content could not load</span>
-                   <span className="font-inter text-[11px] leading-[1.35] text-timeText break-words">{error}</span>
-                 </div>
-               )}
-               {!isLoading && !error && visibleThreads.length === 0 && (
-                 <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
-                   <span className="font-anek font-semibold text-[16px] text-titleMalayalam">No threads available</span>
-                 </div>
-               )}
-               {visibleThreads.map((thread) => (
-                 <TopicCard
-                   key={thread.thread_id}
-                   time={formatUpdatedAt(thread.updated_at)}
-                   text={thread.title}
-                   onClick={() => onTopicClick(thread.thread_id)}
-                 />
-               ))}
-            </div>
+      <div className="relative ml-[11px] mt-[17px]  h-[55px] w-[111px] flex-shrink-0 overflow-hidden md:block">
+        <img src={appleLogoText} className="h-full w-full object-cover" alt="Logo" />
+      </div>
 
-            <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[20px] shadow-sm cursor-pointer hover:bg-opacity-90">
-                <span className="font-anek font-semibold text-[16px] text-[#FFFFFF] tracking-[-1.77%] -mr-1">More</span>
-            </div>
+      <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
+        {isLoading && (
+          <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
+            <span className="font-noto font-semibold text-[16px] text-titleMalayalam">Loading threads...</span>
+          </div>
+        )}
+        {!isLoading && error && (
+          <div className="w-full max-w-[354px] min-h-[105px] bg-cardBg rounded-[34px] mx-auto px-[24px] py-[18px] box-border shrink-0 shadow-sm flex flex-col justify-center gap-[8px]">
+            <span className="font-noto font-semibold text-[16px] text-titleMalayalam">Content could not load</span>
+            <span className="font-inter text-[11px] leading-[1.35] text-timeText break-words">{error}</span>
+          </div>
+        )}
+        {!isLoading && !error && visibleThreads.length === 0 && (
+          <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
+            <span className="font-noto font-semibold text-[16px] text-titleMalayalam">No threads available</span>
+          </div>
+        )}
+        {visibleThreads.map((thread) => (
+          <TopicCard
+            key={thread.thread_id}
+            time={formatUpdatedAt(thread.updated_at)}
+            text={thread.title}
+            onClick={() => onTopicClick(thread.thread_id)}
+          />
+        ))}
+      </div>
 
-            <div className="w-full h-[1px] bg-[#000000] mt-[16px] opacity-20"></div>
+      <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[20px] shadow-sm cursor-pointer hover:bg-opacity-90">
+        <span className="font-noto font-semibold text-[16px] text-[#FFFFFF] tracking-[-1.77%] -mr-1">More</span>
+      </div>
 
-            <div className="w-full max-w-[354px] h-[161px] bg-gray-200 mt-[20px] rounded-[12px] flex items-center justify-center">
-                <span className="text-gray-500 font-anek font-semibold text-[16px]">Spotlight (UI Pending)</span>
-            </div>
-        </div>
-    );
+      <div className="w-full h-[1px] bg-[#000000] mt-[16px] opacity-20"></div>
+
+      <div className="w-full max-w-[354px] h-[161px] bg-gray-200 mt-[20px] rounded-[12px] flex items-center justify-center">
+        <span className="text-gray-500 font-noto font-semibold text-[16px]">Spotlight (UI Pending)</span>
+      </div>
+    </div>
+  );
 };
 
 export default HomeContainer;
