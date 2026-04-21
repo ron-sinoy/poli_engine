@@ -27,7 +27,9 @@ export default {
       fontFamily: {
         'malayalam': ['"Noto Serif Malayalam"', 'serif'],
         'inter': ['"SF Pro Rounded"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        'sf': ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif']
+        'sf': ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
+        'anek': ['"Anek Malayalam"', 'sans-serif'],
+        'noto': ['"Noto Sans Malayalam"', 'sans-serif']
       }
     },
   },

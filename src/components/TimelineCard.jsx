@@ -11,22 +11,22 @@ const TimelineCard = ({ text, authorName, authorColor, imageSrc, fallbackImageSr
     };
 
     return (
-        <div className="w-full min-h-[123px] pb-[25px] rounded-[34px] bg-cardBg border border-[#E2E8F0] box-border flex items-start pt-[25px] pl-[18px] pr-[18px] shadow-sm relative">
-            
+        <div className="w-full min-h-[100px] pb-[21px] rounded-[34px] bg-cardBg border border-[#E2E8F0] box-border flex items-start pt-[21px] pl-[14px] pr-[14px] shadow-sm relative">
+
             {/* Avatar block with exact solid background mapped, image floating inside naturally */}
             <div
-                className="w-[64px] h-[64px] rounded-full overflow-hidden flex items-end justify-center shrink-0"
+                className="w-[52px] h-[52px] rounded-full overflow-hidden flex items-end justify-center shrink-0"
                 style={{
                     backgroundColor: authorColor,
                     border: `3px solid ${authorColor}`,
                 }}
             >
-                <img src={imageSrc} onError={handleImageError} className="w-[58px] h-[58px] object-cover object-top" alt="avatar" /> 
+                <img src={imageSrc} onError={handleImageError} className="w-[47px] h-[47px] object-cover object-top" alt="avatar" />
             </div>
-            
+
             {/* Text block with Quote and Author mapped gracefully via Flex column */}
-            <div className="ml-[15px] pt-[0px] flex flex-col w-full pr-[10px]">
-                <p className="font-malayalam font-medium text-[14px] text-textPrimary leading-[1.247] w-full">
+            <div className="ml-[13px] pt-[0px] flex flex-col w-full pr-[10px]">
+                <p className="font-anek font-medium text-[14px] text-textPrimary leading-[1.247] w-full">
                     {text}
                 </p>
                 {authorName && (

@@ -91,7 +91,7 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
                                     </div>
                                 ) : (
                                     <div className="ml-[46px] mr-[24px]">
-                                        <p className="w-full font-malayalam font-medium text-[14px] text-textPrimary leading-[1.4] opacity-90">
+                                        <p className="w-full font-noto font-medium text-[14px] text-textPrimary leading-[1.4] opacity-90">
                                             {ev.text}
                                         </p>
                                     </div>
