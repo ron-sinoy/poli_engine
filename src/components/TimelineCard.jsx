@@ -26,7 +26,7 @@ const TimelineCard = ({ text, authorName, authorColor, imageSrc, fallbackImageSr
 
             {/* Text block with Quote and Author mapped gracefully via Flex column */}
             <div className="ml-[13px] pt-[0px] flex flex-col w-full pr-[10px]">
-                <p className="font-anek font-medium text-[15px] text-textPrimary leading-[1.247] w-full">
+                <p className="font-anek font-medium text-[16px] text-textPrimary leading-[1.247] w-full">
                     {text}
                 </p>
                 {authorName && (
