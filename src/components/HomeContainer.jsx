@@ -76,7 +76,7 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
       </div>
 
       <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[20px] shadow-sm cursor-pointer hover:bg-opacity-90">
-        <span className="font-anek font-semibold text-[16px] text-[#FFFFFF] tracking-[-1.77%] -mr-1">More</span>
+        {/* <span className="font-anek font-semibold text-[16px] text-[#FFFFFF] tracking-[-1.77%] -mr-1">More</span> */}
       </div>
 
       <div className="w-full h-[1px] bg-[#000000] mt-[16px] opacity-20"></div>
