@@ -30,7 +30,7 @@ const formatUpdatedAt = (updatedAt) => {
 };
 
 const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicClick }) => {
-  const visibleThreads = isLoading ? [] : threads.slice(0, 3);
+  const visibleThreads = isLoading ? [] : threads.filter((thread) => thread?.updated_at);
 
   return (
     <div className="w-full h-full flex flex-col box-border px-[24px] items-start">
@@ -42,7 +42,7 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
         <img src={appleLogoText} className="h-full w-full object-cover" alt="Logo" />
       </div>
 
-      <div className="relative mt-6 flex h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
+      <div className="relative mt-6 flex min-h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
         {isLoading && (
           <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
             <span className="font-anek font-semibold text-[16px] text-titleMalayalam">Loading threads...</span>
