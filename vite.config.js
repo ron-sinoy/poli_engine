@@ -11,9 +11,11 @@ export default defineConfig(({ mode }) => {
     server: proxyTarget
       ? {
           proxy: {
-            '/threadsList': proxyTarget,
-            '/threads': proxyTarget,
-            '/cache': proxyTarget,
+            '/api': {
+              target: proxyTarget,
+              changeOrigin: true,
+              rewrite: (path) => path.replace(/^\/api/, ''),
+            },
           },
         }
       : undefined,

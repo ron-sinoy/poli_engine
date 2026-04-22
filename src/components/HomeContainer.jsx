@@ -62,9 +62,10 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
         {visibleThreads.map((thread) => (
           <TopicCard
             key={thread.thread_id}
+            to={`/threads/${encodeURIComponent(thread.thread_id)}`}
             time={formatUpdatedAt(thread.updated_at)}
             text={thread.title}
-            onClick={() => onTopicClick(thread.thread_id)}
+            onClick={onTopicClick ? () => onTopicClick(thread.thread_id) : undefined}
           />
         ))}
       </div>
@@ -75,7 +76,7 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
 
       <div className="w-full h-[1px] bg-[#000000] mt-[16px] opacity-20"></div>
 
-      <div className="w-full max-w-[354px] h-[161px] bg-gray-200 mt-[20px] rounded-[12px] flex items-center justify-center">
+      <div className="hidden w-full max-w-[354px] h-[161px] bg-gray-200 mt-[20px] rounded-[12px] flex items-center justify-center">
         <span className="text-gray-500 font-anek font-semibold text-[16px]">Spotlight (UI Pending)</span>
       </div>
     </div>
