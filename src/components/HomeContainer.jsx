@@ -1,7 +1,7 @@
 import React from 'react';
 import BreakingNews from './BreakingNews';
 import TopicCard from './TopicCard';
-import appleLogoText from '../apple-logo-text.png';
+import manilaColoredLogo from '../../Manila-colored.svg';
 
 const formatUpdatedAt = (updatedAt) => {
   if (!updatedAt) {
@@ -39,7 +39,7 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
       </div>
 
       <div className="relative ml-[11px] mt-[17px]  h-[55px] w-[111px] flex-shrink-0 overflow-hidden md:block">
-        <img src={appleLogoText} className="h-full w-full object-cover" alt="Logo" />
+        <img src={manilaColoredLogo} className="h-full w-full object-contain" alt="Manila" />
       </div>
 
       <div className="relative mt-6 flex min-h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
