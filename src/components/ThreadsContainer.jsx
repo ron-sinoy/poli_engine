@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import TimelineCard from './TimelineCard';
+import PersonsInvolvedSection from './PersonsInvolvedSection';
 import politician001 from '../politician001.png';
 import manilaColoredLogo from '../../Manila-colored.svg';
 
@@ -25,12 +26,54 @@ const toTimelineEvent = (entry, index) => {
     };
 };
 
+const collectPersonsInvolved = (timelineEntries = []) => {
+    const people = [];
+    const seenPeople = new Set();
+
+    timelineEntries.forEach((entry) => {
+        (entry.persons_involved ?? []).forEach((person) => {
+            const name = person?.name?.trim() || '';
+            const photoUrl = person?.photo_url?.trim() || '';
+
+            if (!name && !photoUrl) {
+                return;
+            }
+
+            const key = `${name.toLowerCase()}::${photoUrl}`;
+
+            if (seenPeople.has(key)) {
+                return;
+            }
+
+            seenPeople.add(key);
+
+            people.push({
+                key,
+                name,
+                imageSrc: photoUrl || politician001,
+                accentColor: person?.alliance?.color || AVATAR_FALLBACKS[people.length % AVATAR_FALLBACKS.length],
+            });
+        });
+    });
+
+    return people;
+};
+
 const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => {
+    const [isPeopleSectionExpanded, setIsPeopleSectionExpanded] = useState(true);
+
+    useEffect(() => {
+        setIsPeopleSectionExpanded(true);
+    }, [thread?.thread_id]);
+
+    const timelineEntries = isLoading || !thread
+        ? []
+        : [...(thread.timeline_entries ?? [])].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+
     const events = isLoading || !thread
         ? []
-        : [...(thread.timeline_entries ?? [])]
-            .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
-            .map(toTimelineEvent);
+        : timelineEntries.map(toTimelineEvent);
+    const personsInvolved = isLoading || !thread ? [] : collectPersonsInvolved(timelineEntries);
 
     return (
         <div className="w-full flex items-center justify-center box-border pb-[70px]">
@@ -49,10 +92,17 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
                     <h1 className="ml-[28px] mt-[10px] w-[339px] font-malayalam font-bold text-[20px] text-textPrimary leading-[1.247]">
                         {isLoading ? 'Loading...' : thread?.title ?? ''}
                     </h1>
+
+                    <PersonsInvolvedSection
+                        people={personsInvolved}
+                        isExpanded={isPeopleSectionExpanded}
+                        onToggle={() => setIsPeopleSectionExpanded((currentValue) => !currentValue)}
+                        fallbackImageSrc={politician001}
+                    />
                 </div>
 
                 {/* Dynamic Timeline Group */}
-                <div className="w-full pt-[40px] flex flex-col relative z-10 box-border">
+                <div className={`w-full flex flex-col relative z-10 box-border ${personsInvolved.length > 0 ? 'pt-[24px]' : 'pt-[40px]'}`}>
                     {error && (
                         <div className="ml-[28px] mr-[24px] rounded-[24px] bg-cardBg px-[20px] py-[18px] shadow-sm">
                             <p className="font-noto font-bold text-[16px] text-textPrimary">Content could not load</p>
