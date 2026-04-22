@@ -1,5 +1,6 @@
 import React from 'react';
 import BreakingNews from './BreakingNews';
+import DevelopmentNoticeBanner from './DevelopmentNoticeBanner';
 import TopicCard from './TopicCard';
 import manilaColoredLogo from '../../Manila-colored.svg';
 
@@ -36,6 +37,10 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
     <div className="w-full h-full flex flex-col box-border px-[24px] items-start">
       <div className="mt-[10px] md:mt-[75px]">
         <BreakingNews text="എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" />
+      </div>
+
+      <div className="mt-[10px]">
+        <DevelopmentNoticeBanner />
       </div>
 
       <div className="relative ml-[11px] mt-[17px]  h-[55px] w-[111px] flex-shrink-0 overflow-hidden md:block">

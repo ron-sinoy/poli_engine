@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import DevelopmentNoticeBanner from './DevelopmentNoticeBanner';
 import TimelineCard from './TimelineCard';
 import PersonsInvolvedSection from './PersonsInvolvedSection';
 import politician001 from '../politician001.png';
@@ -92,6 +93,10 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
                     <h1 className="ml-[28px] mt-[10px] w-[339px] font-malayalam font-bold text-[20px] text-textPrimary leading-[1.247]">
                         {isLoading ? 'Loading...' : thread?.title ?? ''}
                     </h1>
+
+                    <div className="ml-[28px] mr-[20px] mt-[12px]">
+                        <DevelopmentNoticeBanner />
+                    </div>
 
                     <PersonsInvolvedSection
                         people={personsInvolved}
