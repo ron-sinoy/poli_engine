@@ -4,7 +4,6 @@ import LoadingSplash from './LoadingSplash';
 import TimelineCard from './TimelineCard';
 import PersonsInvolvedSection from './PersonsInvolvedSection';
 import politician001 from '../politician001.png';
-import manilaColoredLogo from '../../Manila-colored.svg';
 
 const AVATAR_FALLBACKS = ['#F48789', '#94BEF2'];
 
@@ -87,9 +86,7 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
             <div className="w-full relative overflow-visible box-border">
                 {/* Content Wrapper */}
                 <div className="flex flex-col pt-[20px] md:pt-[72px]">
-                    <div className="ml-[33px] mt-[20px] h-[93px] w-[78px] overflow-hidden">
-                        <img src={manilaColoredLogo} className="h-full w-full object-contain" alt="Manila" />
-                    </div>
+                    <div className="ml-[11px] mt-[20px] h-[78px] w-[78px] flex-shrink-0" aria-hidden />
                     {/* Back Button for Navigation (Hidden inside design, used as utility overlay) */}
                     <button onClick={onBack} className="text-blue-500 font-bold text-xs hover:opacity-80 cursor-pointer self-start ml-[28px] mt-[-5px]">
                         &lt; Home

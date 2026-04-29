@@ -2,8 +2,8 @@ import React from 'react';
 import BreakingNews from './BreakingNews';
 import DevelopmentNoticeBanner from './DevelopmentNoticeBanner';
 import LoadingSplash from './LoadingSplash';
+import SiteLogo from './SiteLogo';
 import TopicCard from './TopicCard';
-import manilaColoredLogo from '../../Manila-colored.svg';
 
 const formatUpdatedAt = (updatedAt) => {
   if (!updatedAt) {
@@ -48,9 +48,11 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
         <DevelopmentNoticeBanner />
       </div>
 
-      <div className="relative ml-[11px] mt-[17px]  h-[55px] w-[111px] flex-shrink-0 overflow-hidden md:block">
-        <img src={manilaColoredLogo} className="h-full w-full object-contain" alt="Manila" />
-      </div>
+      <SiteLogo
+        className="ml-[24px] mt-[17px] h-[36px] w-[101px] flex-shrink-0 md:block"
+        alt="Cat logo"
+        variant="home"
+      />
 
       <div className="relative mt-6 flex min-h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
         {!isLoading && error && (
