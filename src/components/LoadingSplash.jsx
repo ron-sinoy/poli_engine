@@ -1,6 +1,5 @@
 import React from 'react';
-import './LoadingSplash.css';
-import splashImage from '../../emote_hog_rider_confused.png';
+import splashImage from '../assets/cat_loading.gif';
 
 const LoadingSplash = () => {
   return (
@@ -8,7 +7,7 @@ const LoadingSplash = () => {
       <img
         src={splashImage}
         alt="Loading"
-        className="loading-splash-blink block h-[200px] w-[256px] max-w-full object-contain"
+        className="block h-[200px] w-[256px] max-w-full object-contain"
       />
     </div>
   );
