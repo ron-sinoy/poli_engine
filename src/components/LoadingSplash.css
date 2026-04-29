@@ -1,0 +1,14 @@
+.loading-splash-blink {
+  animation: loading-splash-blink 1.1s steps(1, end) infinite;
+}
+
+@keyframes loading-splash-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}

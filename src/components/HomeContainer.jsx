@@ -1,6 +1,7 @@
 import React from 'react';
 import BreakingNews from './BreakingNews';
 import DevelopmentNoticeBanner from './DevelopmentNoticeBanner';
+import LoadingSplash from './LoadingSplash';
 import TopicCard from './TopicCard';
 import manilaColoredLogo from '../../Manila-colored.svg';
 
@@ -31,6 +32,10 @@ const formatUpdatedAt = (updatedAt) => {
 };
 
 const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicClick }) => {
+  if (isLoading) {
+    return <LoadingSplash />;
+  }
+
   const visibleThreads = isLoading ? [] : threads.filter((thread) => thread?.updated_at);
 
   return (
@@ -48,11 +53,6 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
       </div>
 
       <div className="relative mt-6 flex min-h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
-        {isLoading && (
-          <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
-            <span className="font-anek font-semibold text-[16px] text-titleMalayalam">Loading threads...</span>
-          </div>
-        )}
         {!isLoading && error && (
           <div className="w-full max-w-[354px] min-h-[105px] bg-cardBg rounded-[34px] mx-auto px-[24px] py-[18px] box-border shrink-0 shadow-sm flex flex-col justify-center gap-[8px]">
             <span className="font-anek font-semibold text-[16px] text-titleMalayalam">Content could not load</span>

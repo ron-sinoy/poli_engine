@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DevelopmentNoticeBanner from './DevelopmentNoticeBanner';
+import LoadingSplash from './LoadingSplash';
 import TimelineCard from './TimelineCard';
 import PersonsInvolvedSection from './PersonsInvolvedSection';
 import politician001 from '../politician001.png';
@@ -66,6 +67,10 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
     useEffect(() => {
         setIsPeopleSectionExpanded(true);
     }, [thread?.thread_id]);
+
+    if (isLoading) {
+        return <LoadingSplash />;
+    }
 
     const timelineEntries = isLoading || !thread
         ? []
