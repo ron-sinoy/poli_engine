@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const DevelopmentNoticeBanner = () => {
   const [isDismissed, setIsDismissed] = useState(false);
+
+  useEffect(() => {
+    if (isDismissed) {
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setIsDismissed(true);
+    }, 2500);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [isDismissed]);
 
   if (isDismissed) {
     return null;
