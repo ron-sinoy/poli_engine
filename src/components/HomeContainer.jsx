@@ -39,7 +39,7 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
   const visibleThreads = isLoading ? [] : threads.filter((thread) => thread?.updated_at);
 
   return (
-    <div className="w-full h-full flex flex-col box-border px-[24px] items-start">
+    <div className="flex h-full min-h-full w-full flex-col items-start bg-cardBg px-[24px] box-border">
       <div className="mt-[10px] md:mt-[75px]">
         <BreakingNews text="എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" />
       </div>
@@ -54,27 +54,31 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
         variant="home"
       />
 
-      <div className="relative mt-6 flex min-h-[326px] w-full max-w-[354px] flex-col gap-[6px]  rounded-[34px] bg-[#f0f2f4] py-[10px] md:mt-[2px]">
+      <div className="relative mt-[49px] flex min-h-[326px] w-full max-w-[354px] flex-col overflow-hidden border-b border-[#D6DCE6] bg-cardBg md:mt-[27px]">
         {!isLoading && error && (
-          <div className="w-full max-w-[354px] min-h-[105px] bg-cardBg rounded-[34px] mx-auto px-[24px] py-[18px] box-border shrink-0 shadow-sm flex flex-col justify-center gap-[8px]">
+          <div className="flex min-h-[105px] w-full flex-col justify-center gap-[8px] px-[20px] py-[18px]">
             <span className="font-anek font-semibold text-[16px] text-titleMalayalam">Content could not load</span>
             <span className="font-inter text-[11px] leading-[1.35] text-timeText break-words">{error}</span>
           </div>
         )}
         {!isLoading && !error && visibleThreads.length === 0 && (
-          <div className="w-full max-w-[354px] h-[105px] bg-cardBg rounded-[34px] mx-auto px-[33px] box-border shrink-0 shadow-sm flex items-center">
+          <div className="flex h-[105px] w-full items-center px-[20px]">
             <span className="font-anek font-semibold text-[16px] text-titleMalayalam">No threads available</span>
           </div>
         )}
-        {visibleThreads.map((thread) => (
-          <TopicCard
-            key={thread.thread_id}
-            to={`/threads/${encodeURIComponent(thread.thread_id)}`}
-            time={formatUpdatedAt(thread.updated_at)}
-            text={thread.title}
-            onClick={onTopicClick ? () => onTopicClick(thread.thread_id) : undefined}
-          />
-        ))}
+        {!isLoading && !error && visibleThreads.length > 0 && (
+          <div className="flex flex-col divide-y divide-[#D6DCE6]">
+            {visibleThreads.map((thread) => (
+              <TopicCard
+                key={thread.thread_id}
+                to={`/threads/${encodeURIComponent(thread.thread_id)}`}
+                time={formatUpdatedAt(thread.updated_at)}
+                text={thread.title}
+                onClick={onTopicClick ? () => onTopicClick(thread.thread_id) : undefined}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[20px] shadow-sm cursor-pointer hover:bg-opacity-90">
