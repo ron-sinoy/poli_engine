@@ -73,7 +73,7 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
 
     const timelineEntries = isLoading || !thread
         ? []
-        : [...(thread.timeline_entries ?? [])].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+        : [...(thread.timeline_entries ?? [])].sort((a, b) => (b.position ?? 0) - (a.position ?? 0));
 
     const events = isLoading || !thread
         ? []
