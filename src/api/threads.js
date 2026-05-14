@@ -1,23 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL?.trim().replace(/\/$/, '') || '/api';
-
-const buildUrl = (path) => `${API_BASE_URL}${path}`;
-
-const requestJson = async (path) => {
-  const url = buildUrl(path);
-  let response;
-
-  try {
-    response = await fetch(url);
-  } catch (error) {
-    throw new Error(`Could not connect to ${url}. Check VITE_API_BASE_URL and whether the backend is running.`);
-  }
-
-  if (!response.ok) {
-    throw new Error(`Request failed for ${url}: ${response.status}`);
-  }
-
-  return response.json();
-};
+import { raceJson } from './race';
 
 const unwrapCollection = (payload) => {
   if (Array.isArray(payload)) {
@@ -41,7 +22,7 @@ const unwrapCollection = (payload) => {
 
 const unwrapRecord = (payload) => payload?.data ?? payload?.thread ?? payload;
 
-export const getThreadsList = async () => unwrapCollection(await requestJson('/threadsList'));
+export const getThreadsList = async () => unwrapCollection(await raceJson('/threadsList'));
 
 export const getThread = (threadId) =>
-  requestJson(`/threads/${encodeURIComponent(threadId)}`).then(unwrapRecord);
+  raceJson(`/threads/${encodeURIComponent(threadId)}`).then(unwrapRecord);
