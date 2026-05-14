@@ -7,7 +7,7 @@ import { getThread, getThreadsList } from './api/threads';
 const formatTime = (d) =>
   d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
-const AppShell = ({ children }) => {
+const StatusClock = () => {
   const [currentTime, setCurrentTime] = useState(() => formatTime(new Date()));
 
   useEffect(() => {
@@ -16,20 +16,29 @@ const AppShell = ({ children }) => {
   }, []);
 
   return (
-    <div className="app-shell mobile-container">
+    <div
+      className="pointer-events-none absolute right-[24px] top-[20px] z-50 hidden md:block font-inter font-extrabold text-[12px] text-[#000000] opacity-90 mr-[20px] mt-[10px] mb-[8px]"
+      aria-hidden
+    >
+      {currentTime}
+    </div>
+  );
+};
+
+const AppShell = ({ children }) => {
+  return (
+    <div className="app-shell">
       <div
         className="pointer-events-none absolute left-[129px] top-[20px] z-50 hidden h-[38.95px] w-[133.56px] rounded-[100px] bg-black md:block"
         aria-hidden
       />
 
-      <div
-        className="pointer-events-none absolute right-[24px] top-[20px] z-50 hidden md:block font-inter font-extrabold text-[12px] text-[#000000] opacity-90 mr-[20px] mt-[10px] mb-[8px]"
-        aria-hidden
-      >
-        {currentTime}
-      </div>
+      <StatusClock />
 
-      <div className="relative h-full w-full flex-1 overflow-y-auto no-scrollbar pb-[20px] transition-transform">
+      <div
+        id="app-scroll-container"
+        className="desktop-scroll-hidden relative min-h-[100dvh] w-full pb-[20px] touch-pan-y transition-transform md:h-full md:min-h-0 md:flex-1 md:overflow-y-auto md:[-webkit-overflow-scrolling:touch]"
+      >
         {children}
       </div>
     </div>
@@ -41,6 +50,7 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.getElementById('app-scroll-container')?.scrollTo(0, 0);
   }, [location.pathname]);
 
   return null;

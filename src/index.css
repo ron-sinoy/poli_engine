@@ -29,28 +29,29 @@
   }
 }
 
-/* Scrollbar hiding only; frame size/chrome is responsive in App.jsx */
-.mobile-container {
-  position: relative;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-.mobile-container::-webkit-scrollbar {
-  display: none;
-}
-
 /*
   Phone chrome: ONLY from 768px up (Tailwind `md`).
   Below that: edge-to-edge app — no bezel, radius, or fixed 402×874 frame.
 */
 @layer components {
   .app-shell {
-    @apply relative mx-auto box-border flex h-[100dvh] min-h-[100dvh] w-full flex-col overflow-hidden rounded-none border-0 bg-[#f0f2f4] font-sans shadow-none;
+    @apply relative mx-auto box-border flex min-h-[100dvh] w-full flex-col overflow-visible rounded-none border-0 bg-[#f0f2f4] font-sans shadow-none;
+  }
+
+  @media (min-width: 768px) {
+    .desktop-scroll-hidden {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .desktop-scroll-hidden::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   @media (min-width: 768px) {
     .app-shell {
-      @apply mt-[2vh] h-[874px] min-h-[874px] w-[402px] rounded-[55px] border-[8px] border-black shadow-2xl;
+      @apply mt-[2vh] h-[874px] min-h-[874px] w-[402px] overflow-hidden rounded-[55px] border-[8px] border-black shadow-2xl;
     }
   }
 }

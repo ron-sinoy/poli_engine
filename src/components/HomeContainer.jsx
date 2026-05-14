@@ -39,7 +39,7 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
   const visibleThreads = isLoading ? [] : threads.filter((thread) => thread?.updated_at);
 
   return (
-    <div className="flex h-full min-h-full w-full flex-col items-start bg-cardBg px-[24px] box-border">
+    <div className="flex min-h-full w-full flex-col items-start bg-cardBg px-[24px] box-border">
       <div className="mt-[10px] md:mt-[75px]">
         <BreakingNews text="എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" />
       </div>
