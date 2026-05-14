@@ -1,0 +1,27 @@
+<svg width="240" height="112" viewBox="0 0 240 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>edge</title>
+  <rect width="240" height="112" fill="white"/>
+  <text
+    x="12"
+    y="78"
+    fill="#000000"
+    font-family="Arial Black, Arial, Helvetica, sans-serif"
+    font-size="78"
+    font-weight="900"
+    letter-spacing="-6"
+  >
+    edge
+  </text>
+  <rect x="124" y="84" width="35" height="10" fill="#000000"/>
+  <rect x="144" y="27" width="9" height="20" transform="rotate(43 144 27)" fill="#000000"/>
+  <text
+    x="210"
+    y="38"
+    fill="#000000"
+    font-family="Arial Black, Arial, Helvetica, sans-serif"
+    font-size="18"
+    font-weight="900"
+  >
+    ®
+  </text>
+</svg>
