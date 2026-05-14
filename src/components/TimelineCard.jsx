@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TimelineCard = ({ text, authorName, authorColor, imageSrc, fallbackImageSrc }) => {
+const TimelineCard = ({ text, authorName, authorColor, imageSrc, fallbackImageSrc, timestampLabel }) => {
     const handleImageError = (event) => {
         if (!fallbackImageSrc || event.currentTarget.dataset.fallbackApplied === 'true') {
             return;
@@ -32,6 +32,11 @@ const TimelineCard = ({ text, authorName, authorColor, imageSrc, fallbackImageSr
                 {authorName && (
                     <p className="mt-[6px] font-malayalam font-normal text-[10px] text-textPrimary opacity-80 leading-[1.247] tracking-tight">
                         {authorName}
+                    </p>
+                )}
+                {timestampLabel && (
+                    <p className="mt-[8px] font-inter text-[11px] font-medium leading-[1.2] text-timeText">
+                        {timestampLabel}
                     </p>
                 )}
             </div>

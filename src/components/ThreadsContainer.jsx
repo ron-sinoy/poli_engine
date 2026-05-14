@@ -6,8 +6,95 @@ import PersonsInvolvedSection from './PersonsInvolvedSection';
 import politician001 from '../politician001.png';
 
 const AVATAR_FALLBACKS = ['#F48789', '#94BEF2'];
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+const formatTimelineTimestamp = (publishedAt) => {
+    if (!publishedAt) {
+        return '';
+    }
+
+    const publishedDate = new Date(publishedAt);
+
+    if (Number.isNaN(publishedDate.getTime())) {
+        return '';
+    }
+
+    const dateLabel = publishedDate.toLocaleDateString(undefined, {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    });
+
+    const timeLabel = publishedDate.toLocaleTimeString(undefined, {
+        hour: 'numeric',
+        minute: '2-digit',
+    });
+
+    return `${dateLabel} • ${timeLabel}`;
+};
+
+const getLocalDayKey = (publishedAt) => {
+    if (!publishedAt) {
+        return '';
+    }
+
+    const publishedDate = new Date(publishedAt);
+
+    if (Number.isNaN(publishedDate.getTime())) {
+        return '';
+    }
+
+    return [
+        publishedDate.getFullYear(),
+        String(publishedDate.getMonth() + 1).padStart(2, '0'),
+        String(publishedDate.getDate()).padStart(2, '0'),
+    ].join('-');
+};
+
+const formatTimelineDayLabel = (publishedAt) => {
+    if (!publishedAt) {
+        return '';
+    }
+
+    const publishedDate = new Date(publishedAt);
+
+    if (Number.isNaN(publishedDate.getTime())) {
+        return '';
+    }
+
+    const today = new Date();
+    const startOfToday = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const startOfPublishedDay = new Date(
+        publishedDate.getFullYear(),
+        publishedDate.getMonth(),
+        publishedDate.getDate(),
+    );
+    const diffDays = Math.round((startOfToday.getTime() - startOfPublishedDay.getTime()) / DAY_MS);
+
+    if (diffDays === 0) {
+        return 'Today';
+    }
+
+    if (diffDays === 1) {
+        return 'Yesterday';
+    }
+
+    if (diffDays >= 2 && diffDays < 7) {
+        return publishedDate.toLocaleDateString(undefined, { weekday: 'long' });
+    }
+
+    return publishedDate.toLocaleDateString(undefined, {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+    });
+};
 
 const toTimelineEvent = (entry, index) => {
+    const timestampLabel = formatTimelineTimestamp(entry.published_at);
+    const dayKey = getLocalDayKey(entry.published_at);
+    const dayLabel = formatTimelineDayLabel(entry.published_at);
+
     if (entry.entry_type === 'quote') {
         const speaker = entry.speaker ?? {};
         const authorColor = speaker.alliance?.color || AVATAR_FALLBACKS[index % AVATAR_FALLBACKS.length];
@@ -18,13 +105,39 @@ const toTimelineEvent = (entry, index) => {
             authorName: speaker.name || '',
             authorColor,
             imageSrc: speaker.photo_url || politician001,
+            timestampLabel,
+            dayKey,
+            dayLabel,
         };
     }
 
     return {
         type: 'text',
         text: entry.body || '',
+        timestampLabel,
+        dayKey,
+        dayLabel,
     };
+};
+
+const groupTimelineEventsByDay = (events = []) => {
+    const groups = [];
+    let currentGroup = null;
+
+    events.forEach((event) => {
+        if (!currentGroup || currentGroup.dayKey !== event.dayKey) {
+            currentGroup = {
+                dayKey: event.dayKey || `event-${groups.length}`,
+                dayLabel: event.dayLabel || '',
+                items: [],
+            };
+            groups.push(currentGroup);
+        }
+
+        currentGroup.items.push(event);
+    });
+
+    return groups;
 };
 
 const collectPersonsInvolved = (timelineEntries = []) => {
@@ -78,6 +191,7 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
     const events = isLoading || !thread
         ? []
         : timelineEntries.map(toTimelineEvent);
+    const timelineGroups = isLoading || !thread ? [] : groupTimelineEventsByDay(events);
     const personsInvolved = isLoading || !thread ? [] : collectPersonsInvolved(timelineEntries);
 
     return (
@@ -128,29 +242,47 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
                         <div className="absolute left-[28.5px] top-[20px] bottom-[50px] w-[1px] bg-timelineStroke opacity-60 pointer-events-none -translate-x-1/2"></div>
                     )}
 
-                    {events.map((ev, index) => {
+                    {timelineGroups.map((group) => {
                         return (
-                            <div key={index} className="relative w-full mb-[32px]">
-                                {/* Timeline Dot positioned exactly at left: 23px with half width mapping to center 28.5px */}
-                                <div className={`absolute w-[11px] h-[11px] rounded-full bg-timelineStroke left-[23.5px] z-20 shadow-sm ${ev.type === 'card' ? 'top-[56px]' : 'top-[5px]'}`}></div>
-                                
-                                {ev.type === 'card' ? (
-                                    <div className="ml-[43px] mr-[24px]">
-                                        <TimelineCard 
-                                            text={ev.text}
-                                            authorName={ev.authorName} 
-                                            authorColor={ev.authorColor} 
-                                            imageSrc={ev.imageSrc} 
-                                            fallbackImageSrc={politician001}
-                                        />
-                                    </div>
-                                ) : (
-                                    <div className="ml-[46px] mr-[24px]">
-                                        <p className="w-full font-noto font-medium text-[16px] text-textPrimary leading-[1.4] opacity-90">
-                                            {ev.text}
+                            <div key={group.dayKey} className="mb-[32px]">
+                                {group.dayLabel && (
+                                    <div className="ml-[46px] mr-[24px] mb-[12px]">
+                                        <p className="inline-flex rounded-full bg-black px-[12px] py-[6px] font-inter text-[11px] font-semibold uppercase tracking-[0.08em] text-white">
+                                            {group.dayLabel}
                                         </p>
                                     </div>
                                 )}
+
+                                {group.items.map((ev, index) => (
+                                    <div key={`${group.dayKey}-${index}`} className="relative w-full mb-[20px] last:mb-0">
+                                        {/* Timeline Dot positioned exactly at left: 23px with half width mapping to center 28.5px */}
+                                        <div className={`absolute w-[11px] h-[11px] rounded-full bg-timelineStroke left-[23.5px] z-20 shadow-sm ${ev.type === 'card' ? 'top-[56px]' : 'top-[5px]'}`}></div>
+
+                                        {ev.type === 'card' ? (
+                                            <div className="ml-[43px] mr-[24px]">
+                                                <TimelineCard
+                                                    text={ev.text}
+                                                    authorName={ev.authorName}
+                                                    authorColor={ev.authorColor}
+                                                    imageSrc={ev.imageSrc}
+                                                    fallbackImageSrc={politician001}
+                                                    timestampLabel={ev.timestampLabel}
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="ml-[46px] mr-[24px]">
+                                                <p className="w-full font-noto font-medium text-[16px] text-textPrimary leading-[1.4] opacity-90">
+                                                    {ev.text}
+                                                </p>
+                                                {ev.timestampLabel && (
+                                                    <p className="mt-[8px] font-inter text-[11px] font-medium leading-[1.2] text-timeText">
+                                                        {ev.timestampLabel}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
                         );
                     })}
