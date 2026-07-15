@@ -63,6 +63,10 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
         variant="home"
       />
 
+      <TrendingPoliticians />
+
+      <div className="w-full h-[1px] bg-[#000000] mt-[16px] opacity-20"></div>
+
       <div className="relative mt-[49px] flex min-h-[326px] w-full max-w-[354px] flex-col overflow-hidden border-b border-[#D6DCE6] bg-cardBg md:mt-[27px]">
         {!isLoading && error && (
           <div className="flex min-h-[105px] w-full flex-col justify-center gap-[8px] px-[20px] py-[18px]">
@@ -103,9 +107,6 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
         </button>
       )}
 
-      <div className="w-full h-[1px] bg-[#000000] mt-[16px] opacity-20"></div>
-
-      <TrendingPoliticians />
     </div>
   );
 };
