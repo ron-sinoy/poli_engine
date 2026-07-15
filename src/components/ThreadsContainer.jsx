@@ -3,7 +3,7 @@ import DevelopmentNoticeBanner from './DevelopmentNoticeBanner';
 import LoadingSplash from './LoadingSplash';
 import TimelineCard from './TimelineCard';
 import PersonsInvolvedSection from './PersonsInvolvedSection';
-import politician001 from '../politician001.png';
+import politicianPlaceholder from '../assets/politicianPlaceholder';
 
 const AVATAR_FALLBACKS = ['#F48789', '#94BEF2'];
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -104,7 +104,7 @@ const toTimelineEvent = (entry, index) => {
             text: entry.quote_text ? `“${entry.quote_text}”` : '',
             authorName: speaker.name || '',
             authorColor,
-            imageSrc: speaker.photo_url || politician001,
+            imageSrc: speaker.photo_url || politicianPlaceholder,
             timestampLabel,
             dayKey,
             dayLabel,
@@ -164,7 +164,7 @@ const collectPersonsInvolved = (timelineEntries = []) => {
             people.push({
                 key,
                 name,
-                imageSrc: photoUrl || politician001,
+                imageSrc: photoUrl || politicianPlaceholder,
                 accentColor: person?.alliance?.color || AVATAR_FALLBACKS[people.length % AVATAR_FALLBACKS.length],
             });
         });
@@ -218,7 +218,7 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
                         people={personsInvolved}
                         isExpanded={isPeopleSectionExpanded}
                         onToggle={() => setIsPeopleSectionExpanded((currentValue) => !currentValue)}
-                        fallbackImageSrc={politician001}
+                        fallbackImageSrc={politicianPlaceholder}
                     />
                 </div>
 
@@ -265,7 +265,7 @@ const ThreadsContainer = ({ thread, isLoading = false, error = '', onBack }) => 
                                                     authorName={ev.authorName}
                                                     authorColor={ev.authorColor}
                                                     imageSrc={ev.imageSrc}
-                                                    fallbackImageSrc={politician001}
+                                                    fallbackImageSrc={politicianPlaceholder}
                                                     timestampLabel={ev.timestampLabel}
                                                 />
                                             </div>

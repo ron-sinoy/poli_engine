@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BreakingNews from './BreakingNews';
 import DevelopmentNoticeBanner from './DevelopmentNoticeBanner';
 import LoadingSplash from './LoadingSplash';
 import SiteLogo from './SiteLogo';
 import TopicCard from './TopicCard';
+import TrendingPoliticians from './TrendingPoliticians';
+
+const COLLAPSED_THREAD_COUNT = 3;
 
 const formatUpdatedAt = (updatedAt) => {
   if (!updatedAt) {
@@ -32,11 +35,17 @@ const formatUpdatedAt = (updatedAt) => {
 };
 
 const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicClick }) => {
+  const [showAllThreads, setShowAllThreads] = useState(false);
+
   if (isLoading) {
     return <LoadingSplash />;
   }
 
   const visibleThreads = isLoading ? [] : threads.filter((thread) => thread?.updated_at);
+  const displayedThreads = showAllThreads
+    ? visibleThreads
+    : visibleThreads.slice(0, COLLAPSED_THREAD_COUNT);
+  const hasMoreThreads = visibleThreads.length > COLLAPSED_THREAD_COUNT;
 
   return (
     <div className="flex min-h-full w-full flex-col items-start bg-cardBg px-[24px] box-border">
@@ -68,7 +77,7 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
         )}
         {!isLoading && !error && visibleThreads.length > 0 && (
           <div className="flex flex-col divide-y divide-[#D6DCE6]">
-            {visibleThreads.map((thread) => (
+            {displayedThreads.map((thread) => (
               <TopicCard
                 key={thread.thread_id}
                 to={`/threads/${encodeURIComponent(thread.thread_id)}`}
@@ -81,16 +90,22 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
         )}
       </div>
 
-      {/* <div className="w-[94px] h-[27px] bg-[#8290A8] rounded-[33px] flex items-center justify-center ml-[130px] mt-[20px] shadow-sm cursor-pointer hover:bg-opacity-90">
-        <span className="font-anek font-semibold text-[16px] text-[#FFFFFF] tracking-[-1.77%] -mr-1">More</span>
-      </div> */}
-      {/* blah blah blah */}
+      {!isLoading && !error && hasMoreThreads && (
+        <button
+          type="button"
+          onClick={() => setShowAllThreads((currentValue) => !currentValue)}
+          aria-expanded={showAllThreads}
+          className="mx-auto mt-[20px] flex h-[27px] w-[94px] cursor-pointer items-center justify-center rounded-[33px] bg-[#8290A8] shadow-sm hover:bg-opacity-90"
+        >
+          <span className="font-anek text-[16px] font-semibold tracking-[-1.77%] text-[#FFFFFF]">
+            {showAllThreads ? 'Less' : 'Show more'}
+          </span>
+        </button>
+      )}
 
       <div className="w-full h-[1px] bg-[#000000] mt-[16px] opacity-20"></div>
 
-      <div className="hidden w-full max-w-[354px] h-[161px] bg-gray-200 mt-[20px] rounded-[12px] flex items-center justify-center">
-        <span className="text-gray-500 font-anek font-semibold text-[16px]">Spotlight (UI Pending)</span>
-      </div>
+      <TrendingPoliticians />
     </div>
   );
 };

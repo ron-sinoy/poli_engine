@@ -1,15 +1,11 @@
+import { API_ORIGINS as CONFIGURED_API_ORIGINS } from '../../api.config';
+
 const normalizeBaseUrl = (value) => value?.trim().replace(/\/$/, '') || '';
 
-const API_ORIGINS = [
-  {
-    key: 'railway',
-    baseUrl: normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL),
-  },
-  {
-    key: 'render',
-    baseUrl: normalizeBaseUrl(import.meta.env.VITE_API_RENDER_BASE_URL),
-  },
-].filter((origin) => origin.baseUrl);
+const API_ORIGINS = CONFIGURED_API_ORIGINS.map((origin) => ({
+  ...origin,
+  baseUrl: normalizeBaseUrl(origin.baseUrl),
+})).filter((origin) => origin.baseUrl);
 
 const buildUrl = (baseUrl, path) => `${baseUrl}${path}`;
 
@@ -54,7 +50,7 @@ const getOrigins = () => {
   }
 
   throw new Error(
-    'No backend origins configured. Set VITE_API_BASE_URL and VITE_API_RENDER_BASE_URL.',
+    'No backend origins configured in api.config.js.',
   );
 };
 
