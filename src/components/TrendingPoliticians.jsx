@@ -71,7 +71,7 @@ const TrendingPoliticians = () => {
 
   return (
     <div className="w-full max-w-[354px] mt-[20px]">
-      <h2 className="font-anek text-[16px] font-semibold text-textPrimary">Famous Politician</h2>
+      <h2 className="font-anek text-[16px] font-semibold text-textPrimary">Politician in Spotlight</h2>
 
       <div
         className="mt-[12px] flex w-full items-center gap-[16px] overflow-hidden rounded-[12px] bg-cardBg px-[16px]"
