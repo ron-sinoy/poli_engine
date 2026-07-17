@@ -1,5 +1,5 @@
 import React from 'react';
-import siteLogo from '../logo.png';
+import siteLogo from '../Poli_.png';
 
 const SiteLogo = ({ className = '', alt = 'edge logo', variant = 'default' }) => {
   const imageClassName =
