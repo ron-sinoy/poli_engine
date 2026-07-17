@@ -52,8 +52,8 @@ const TrendingPoliticians = () => {
     return () => clearInterval(timer);
   }, [politicians.length]);
 
-  // Matches PersonsInvolvedSection: nothing to show, show nothing.
-  if (politicians.length < 2) {
+  // Nothing to show, show nothing.
+  if (politicians.length === 0) {
     return null;
   }
 
@@ -121,22 +121,24 @@ const TrendingPoliticians = () => {
           </p>
         </div>
 
-        <div className="flex shrink-0 flex-col gap-[6px] self-center">
-          {politicians.map((item, index) => (
-            <button
-              key={item.person_id}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              aria-label={`Show ${item.name}`}
-              aria-current={index === activeIndex}
-              className="h-[6px] w-[6px] rounded-full transition-opacity"
-              style={{
-                backgroundColor: index === activeIndex ? accentColor : '#D6DCE6',
-                opacity: index === activeIndex ? 1 : 0.7,
-              }}
-            />
-          ))}
-        </div>
+        {politicians.length > 1 && (
+          <div className="flex shrink-0 flex-col gap-[6px] self-center">
+            {politicians.map((item, index) => (
+              <button
+                key={item.person_id}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                aria-label={`Show ${item.name}`}
+                aria-current={index === activeIndex}
+                className="h-[6px] w-[6px] rounded-full transition-opacity"
+                style={{
+                  backgroundColor: index === activeIndex ? accentColor : '#D6DCE6',
+                  opacity: index === activeIndex ? 1 : 0.7,
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
