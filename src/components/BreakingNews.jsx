@@ -1,15 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-const BreakingNews = ({ text }) => (
-  // Used flex flex-row items-center and gap to ensure text and live-badge strictly never overlap
-  <div className="w-full max-w-[354px] h-[75px] bg-bnBg rounded-[24px] mx-auto flex flex-row items-center px-[12px] gap-[20px] box-border shrink-0 shadow-sm relative">
-    <div className="w-[15.61px] h-[52.21px] rounded-[34px] bg-bnPill flex items-center justify-center shrink-0 self-start z-20 overflow-hidden">
-      <span className="font-inter font-medium text-[9px] text-bnPillText uppercase -rotate-90 flex items-center justify-center h-full w-full tracking-widest whitespace-nowrap relative pt-[1px]">live</span>
+const ROTATION_INTERVAL_MS = 3000;
+
+const BreakingNews = ({ news = [], isLoading = false, error = '' }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const incidents = news.filter((incident) => typeof incident?.body === 'string' && incident.body.trim());
+
+  useEffect(() => {
+    setActiveIndex(0);
+
+    if (incidents.length < 2) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((currentIndex) => (currentIndex + 1) % incidents.length);
+    }, ROTATION_INTERVAL_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, [news, incidents.length]);
+
+  const text = incidents[activeIndex]?.body
+    || (isLoading ? 'Loading breaking news...' : '')
+    || (error ? 'Breaking news is unavailable.' : '')
+    || 'No breaking news available.';
+
+  return (
+    <div className="w-full max-w-[354px] min-h-[75px] bg-bnBg rounded-[24px] mx-auto flex flex-col items-start px-[16px] py-[12px] gap-[8px] box-border shrink-0 shadow-sm">
+      <div className="h-[18px] rounded-[34px] bg-bnPill flex items-center justify-center px-[9px] shrink-0">
+        <span className="font-inter font-medium text-[9px] text-bnPillText uppercase tracking-widest whitespace-nowrap">live</span>
+      </div>
+      <p className="font-anek font-semibold text-[12px] text-textMalayalam leading-[1.5] w-full">
+        {text}
+      </p>
     </div>
-    <p className="font-anek font-semibold text-[12px] text-textMalayalam leading-[1.247] h-[37px] line-clamp-3 flex items-center">
-      {text}
-    </p>
-  </div>
-);
+  );
+};
 
 export default BreakingNews;

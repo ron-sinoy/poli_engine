@@ -54,15 +54,15 @@ const HomeContainer = ({
     ? visibleThreads
     : visibleThreads.slice(0, COLLAPSED_THREAD_COUNT);
   const hasMoreThreads = visibleThreads.length > COLLAPSED_THREAD_COUNT;
-  const breakingNewsText = breakingNews[0]?.body
-    || (breakingNewsLoading ? 'Loading breaking news...' : '')
-    || (breakingNewsError ? 'Breaking news is unavailable.' : '')
-    || 'No breaking news available.';
 
   return (
     <div className="flex min-h-full w-full flex-col items-start bg-cardBg px-[24px] box-border">
       <div className="mt-[10px] md:mt-[75px]">
-        <BreakingNews text={breakingNewsText} />
+        <BreakingNews
+          news={breakingNews}
+          isLoading={breakingNewsLoading}
+          error={breakingNewsError}
+        />
       </div>
 
       <div className="mt-[10px]">
