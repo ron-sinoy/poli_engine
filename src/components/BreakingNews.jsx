@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const ROTATION_INTERVAL_MS = 3000;
+const ROTATION_INTERVAL_MS = 5500;
 
 const BreakingNews = ({ news = [], isLoading = false, error = '' }) => {
   const [activeIndex, setActiveIndex] = useState(0);
