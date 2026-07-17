@@ -34,7 +34,15 @@ const formatUpdatedAt = (updatedAt) => {
   return `${Math.round(diffHours / 24)} day`;
 };
 
-const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicClick }) => {
+const HomeContainer = ({
+  threads = [],
+  isLoading = false,
+  error = '',
+  breakingNews = [],
+  breakingNewsLoading = false,
+  breakingNewsError = '',
+  onTopicClick,
+}) => {
   const [showAllThreads, setShowAllThreads] = useState(false);
 
   if (isLoading) {
@@ -46,11 +54,15 @@ const HomeContainer = ({ threads = [], isLoading = false, error = '', onTopicCli
     ? visibleThreads
     : visibleThreads.slice(0, COLLAPSED_THREAD_COUNT);
   const hasMoreThreads = visibleThreads.length > COLLAPSED_THREAD_COUNT;
+  const breakingNewsText = breakingNews[0]?.body
+    || (breakingNewsLoading ? 'Loading breaking news...' : '')
+    || (breakingNewsError ? 'Breaking news is unavailable.' : '')
+    || 'No breaking news available.';
 
   return (
     <div className="flex min-h-full w-full flex-col items-start bg-cardBg px-[24px] box-border">
       <div className="mt-[10px] md:mt-[75px]">
-        <BreakingNews text="എന്ന ചോദ്യത്തിന് കൃത്യമായി പ്രതികരിക്കാൻ അദ്ദേഹം തയ്യാറായതുമില്ല" />
+        <BreakingNews text={breakingNewsText} />
       </div>
 
       <div className="mt-[10px]">

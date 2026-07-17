@@ -24,5 +24,7 @@ const unwrapRecord = (payload) => payload?.data ?? payload?.thread ?? payload;
 
 export const getThreadsList = async () => unwrapCollection(await raceJson('/threadsList'));
 
+export const getBreakingNews = async () => unwrapCollection(await raceJson('/breaking-news'));
+
 export const getThread = (threadId) =>
   raceJson(`/threads/${encodeURIComponent(threadId)}`).then(unwrapRecord);

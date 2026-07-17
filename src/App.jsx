@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import HomeContainer from './components/HomeContainer';
 import ThreadsContainer from './components/ThreadsContainer';
-import { getThread, getThreadsList } from './api/threads';
+import { getBreakingNews, getThread, getThreadsList } from './api/threads';
 
 const formatTime = (d) =>
   d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -60,6 +60,9 @@ const HomePage = () => {
   const [threads, setThreads] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [breakingNews, setBreakingNews] = useState([]);
+  const [breakingNewsLoading, setBreakingNewsLoading] = useState(true);
+  const [breakingNewsError, setBreakingNewsError] = useState('');
 
   useEffect(() => {
     let ignore = false;
@@ -92,8 +95,46 @@ const HomePage = () => {
     };
   }, []);
 
+  useEffect(() => {
+    let ignore = false;
+
+    const loadBreakingNews = async () => {
+      setBreakingNewsLoading(true);
+      setBreakingNewsError('');
+
+      try {
+        const incidents = await getBreakingNews();
+        if (!ignore) {
+          setBreakingNews(incidents);
+        }
+      } catch (loadError) {
+        if (!ignore) {
+          setBreakingNews([]);
+          setBreakingNewsError(loadError.message);
+        }
+      } finally {
+        if (!ignore) {
+          setBreakingNewsLoading(false);
+        }
+      }
+    };
+
+    loadBreakingNews();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
   return (
-    <HomeContainer threads={threads} isLoading={isLoading} error={error} />
+    <HomeContainer
+      threads={threads}
+      isLoading={isLoading}
+      error={error}
+      breakingNews={breakingNews}
+      breakingNewsLoading={breakingNewsLoading}
+      breakingNewsError={breakingNewsError}
+    />
   );
 };
 
