@@ -70,7 +70,7 @@ const TrendingPoliticians = () => {
   };
 
   return (
-    <div className="w-full max-w-[354px] mt-[20px]">
+    <div className="w-full max-w-[354px] mt-[8px]">
       <h2 className="font-anek text-[16px] font-semibold text-textPrimary">Politician in Spotlight</h2>
 
       <div
