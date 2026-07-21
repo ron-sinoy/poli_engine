@@ -113,7 +113,7 @@ const HomeContainer = ({
           type="button"
           onClick={() => setShowAllThreads((currentValue) => !currentValue)}
           aria-expanded={showAllThreads}
-          className="mx-auto mt-[20px] flex h-[27px] w-[94px] cursor-pointer items-center justify-center rounded-[33px] bg-[#8290A8] shadow-sm hover:bg-opacity-90"
+          className="mx-auto mt-[20px] flex h-[27px] w-[94px] cursor-pointer items-center justify-center rounded-[33px] bg-[#0066cc] shadow-sm hover:bg-opacity-90"
         >
           <span className="font-anek text-[16px] font-semibold tracking-[-1.77%] text-[#FFFFFF]">
             {showAllThreads ? 'Less' : 'Show more'}
