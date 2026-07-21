@@ -70,7 +70,7 @@ const HomeContainer = ({
       </div>
 
       <SiteLogo
-        className="mt-[34px] h-[116px] w-[366px] flex-shrink-0 md:block"
+        className="mt-[34px] h-[39px] w-[122px] flex-shrink-0 md:block"
         alt="edge logo"
         variant="home"
       />
