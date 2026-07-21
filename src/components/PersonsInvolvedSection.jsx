@@ -35,7 +35,7 @@ const PersonsInvolvedSection = ({ people = [], isExpanded = true, onToggle, fall
             {isExpanded && (
                 <div className="grid grid-cols-3 gap-x-[12px] gap-y-[14px] pb-[14px]">
                     {people.map((person) => (
-                        <div key={person.key} className="flex items-center justify-center">
+                        <div key={person.key} className="flex flex-col items-center justify-start gap-[6px]">
                             <div
                                 className="flex h-[72px] w-[72px] items-end justify-center overflow-hidden rounded-full"
                                 style={{
@@ -50,6 +50,11 @@ const PersonsInvolvedSection = ({ people = [], isExpanded = true, onToggle, fall
                                     alt={person.name || 'Person involved'}
                                 />
                             </div>
+                            {person.name && (
+                                <span className="w-full text-center font-anek text-[11px] font-medium leading-[1.2] text-titleMalayalam line-clamp-2">
+                                    {person.name}
+                                </span>
+                            )}
                         </div>
                     ))}
                 </div>
