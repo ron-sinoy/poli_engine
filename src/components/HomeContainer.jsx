@@ -7,6 +7,7 @@ import TopicCard from './TopicCard';
 import TrendingPoliticians from './TrendingPoliticians';
 
 const COLLAPSED_THREAD_COUNT = 3;
+const THREAD_PAGE_SIZE = 7;
 
 const formatUpdatedAt = (updatedAt) => {
   if (!updatedAt) {
@@ -43,17 +44,15 @@ const HomeContainer = ({
   breakingNewsError = '',
   onTopicClick,
 }) => {
-  const [showAllThreads, setShowAllThreads] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(COLLAPSED_THREAD_COUNT);
 
   if (isLoading) {
     return <LoadingSplash />;
   }
 
   const visibleThreads = isLoading ? [] : threads.filter((thread) => thread?.updated_at);
-  const displayedThreads = showAllThreads
-    ? visibleThreads
-    : visibleThreads.slice(0, COLLAPSED_THREAD_COUNT);
-  const hasMoreThreads = visibleThreads.length > COLLAPSED_THREAD_COUNT;
+  const displayedThreads = visibleThreads.slice(0, visibleCount);
+  const hasMoreThreads = visibleCount < visibleThreads.length;
 
   return (
     <div className="flex min-h-full w-full flex-col items-start bg-cardBg px-[24px] box-border">
@@ -111,12 +110,11 @@ const HomeContainer = ({
       {!isLoading && !error && hasMoreThreads && (
         <button
           type="button"
-          onClick={() => setShowAllThreads((currentValue) => !currentValue)}
-          aria-expanded={showAllThreads}
+          onClick={() => setVisibleCount((currentValue) => currentValue + THREAD_PAGE_SIZE)}
           className="mx-auto mt-[20px] flex h-[27px] w-[94px] cursor-pointer items-center justify-center rounded-[33px] bg-[#0066cc] shadow-sm hover:bg-opacity-90"
         >
           <span className="font-anek text-[16px] font-semibold tracking-[-1.77%] text-[#FFFFFF]">
-            {showAllThreads ? 'Less' : 'Show more'}
+            Show more
           </span>
         </button>
       )}
