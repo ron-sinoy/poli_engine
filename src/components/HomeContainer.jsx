@@ -7,7 +7,7 @@ import TopicCard from './TopicCard';
 import TrendingPoliticians from './TrendingPoliticians';
 
 const COLLAPSED_THREAD_COUNT = 3;
-const THREAD_PAGE_SIZE = 7;
+const THREAD_PAGE_SIZE = 12;
 
 const formatUpdatedAt = (updatedAt) => {
   if (!updatedAt) {
